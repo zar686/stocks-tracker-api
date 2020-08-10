@@ -5,9 +5,6 @@ const mongodb = require('mongodb')
 // instantiate express application object
 const app = express()
 
-const port = process.env.port
-if (port == null || port == "") {
-}
 
 app.use(express.static('public'))
 

@@ -7,7 +7,7 @@ const app = express()
 
 const port = process.env.port
 if (port == null || port == "") {
-   port = 4741
+   port = 4741;
 }
 
 app.use(express.static('public'))

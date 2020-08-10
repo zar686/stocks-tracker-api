@@ -1,7 +1,7 @@
 {
   "name": "stocks-tracker-api",
   "version": "0.0.1",
-  "description": "This application allows the user to do x, y, and z. Maybe here's a reason why I\r wanted to do this project, or came up with this idea.",
+  "description": "This application allows user to add Stocks in a list.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

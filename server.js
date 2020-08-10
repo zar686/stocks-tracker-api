@@ -6,8 +6,8 @@ const mongodb = require('mongodb')
 const app = express()
 
 const port = process.env.port
-if (port == null || port == "" ) {
-  port = 4741
+if (port == null || port == "") {
+   port = 4741
 }
 
 app.use(express.static('public'))
@@ -16,7 +16,7 @@ app.use(express.static('public'))
 let connectionString = 'mongodb+srv://azam:college86@cluster0.b44e2.mongodb.net/TodoApp?retryWrites=true&w=majority'
 mongodb.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, client) {
   db = client.db()
-  app.listen(4741)
+  app.listen(port)
 })
 
 app.use(express.json())

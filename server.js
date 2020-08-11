@@ -32,7 +32,7 @@ app.get('/', function(req, res) {
       <div class="container">
         <h1 class="display-4 text-center py-1">TRILLIONAIRES STOCKS</h1>
 
-        <h4 class="display-4 text-center py-1"> <a href="join.robinhood.com/azamz">Sign up with robinhood to Invest</a> </h4>
+        <h4 class="display-4 text-center py-1"> <a href="join.robinhood.com/azamz">Get a free stock from Robinhood</a> </h4>
 
 
         <div class="jumbotron p-3 shadow-sm">

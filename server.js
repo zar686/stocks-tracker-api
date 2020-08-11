@@ -32,9 +32,8 @@ app.get('/', function(req, res) {
       <div class="container">
         <h1 class="display-4 text-center py-1">TRILLIONAIRES STOCKS</h1>
 
-        <h3 class="display-4 text-center py-1"> <a href="share.robinhood.com/aza">Sign up with robinhood to Invest</a> </h1>
+        <h3 class="display-4 text-center py-1"> <a href="join.robinhood.com/azamz">Sign up with robinhood to Invest</a> </h1>
 
-        <a href="url">link text</a>
 
         <div class="jumbotron p-3 shadow-sm">
           <form id="create-form" action="/create-item" method="POST">

@@ -32,10 +32,7 @@ app.get('/', function(req, res) {
       <div class="container">
         <h1 class="display-4 text-center py-1">TRILLIONAIRES STOCKS</h1>
 
-        <class="display-4 text-center py-1"> <p><a href="join.robinhood.com/azamz">Get a free stock from Robinhood</a></p>
-
-
-        <div class="jumbotron p-3 shadow-sm">
+            <div class="jumbotron p-3 shadow-sm">
           <form id="create-form" action="/create-item" method="POST">
             <div class="d-flex align-items-center">
               <input id="create-field" name="item" autofocus autocomplete="off" class="form-control mr-3" type="text" style="flex: 1;">

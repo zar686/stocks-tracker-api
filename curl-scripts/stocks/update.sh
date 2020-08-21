@@ -9,8 +9,13 @@ curl "${API}${URL_PATH}/${ID}" \
   --header "Content-Type: application/json" \
 --header "Authorization: Bearer ${TOKEN}" \
 --data '{
-    "example": {
-      "name": "'"${NAME}"'"
+    "stock": {
+      "name": "'"${NAME}"'",
+      "symbol": "'"${SYMBOL}"'",
+      "quantity": "'"${QTY}"'",
+      "date": "'"${DATE}"'",
+      "price": "'"${PRICE}"'",
+      "reason": "'"${REASON}"'"      
     }
   }'
 

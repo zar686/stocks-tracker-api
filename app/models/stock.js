@@ -9,6 +9,22 @@ const stockSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  quantity: {
+    type: Number,
+    required: true
+  },
+  date: {
+    type: Date,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  reason: {
+    type: String,
+    required: true
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

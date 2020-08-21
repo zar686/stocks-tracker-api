@@ -4,7 +4,7 @@ const express = require('express')
 const passport = require('passport')
 
 // pull in Mongoose model for examples
-const Stock = require('../models/stocks')
+const Stock = require('../models/stock')
 
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
@@ -28,7 +28,7 @@ const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
 // INDEX
-// GET /examples
+// GET /stocks
 router.get('/stocks', requireToken, (req, res, next) => {
   Stock.find()
     .then(stocks => {
@@ -50,7 +50,7 @@ router.get('/stocks/:id', requireToken, (req, res, next) => {
   Stock.findById(req.params.id)
     .then(handle404)
     // if `findById` is succesful, respond with 200 and "example" JSON
-    .then(example => res.status(200).json({ example: example.toObject() }))
+    .then(stock => res.status(200).json({ stock: stock.toObject() }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })

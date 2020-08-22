@@ -1,83 +1,76 @@
 // require necessary NPM packages
 const express = require('express')
-const mongodb = require('mongodb')
+const mongoose = require('mongoose')
+const cors = require('cors')
+
+// require route files
+const stockRoutes = require('./app/routes/stock_routes')
+
+// require middleware
+const errorHandler = require('./lib/error_handler')
+const replaceToken = require('./lib/replace_token')
+const requestLogger = require('./lib/request_logger')
+
+// require database configuration logic
+// `db` will be the actual Mongo URI as a string
+const db = require('./config/db')
+
+// require configured passport authentication middleware
+const auth = require('./lib/auth')
+
+// define server and client ports
+// used for cors and local port declaration
+const serverDevPort = 4741
+const clientDevPort = 7165
+
+// establish database connection
+// use new version of URL parser
+// use createIndex instead of deprecated ensureIndex
+mongoose.connect(db, {
+  useNewUrlParser: true,
+  useCreateIndex: true
+})
 
 // instantiate express application object
 const app = express()
 
+// set CORS headers on response from this API using the `cors` NPM package
+// `CLIENT_ORIGIN` is an environment variable that will be set on Heroku
+app.use(cors({ origin: process.env.CLIENT_ORIGIN || `http://localhost:${clientDevPort}` }))
 
-app.use(express.static('public'))
+// define port for API to run on
+const port = process.env.PORT || serverDevPort
 
+// this middleware makes it so the client can use the Rails convention
+// of `Authorization: Token token=<token>` OR the Express convention of
+// `Authorization: Bearer <token>`
+app.use(replaceToken)
 
-let connectionString = 'mongodb+srv://azam:college86@cluster0.b44e2.mongodb.net/TodoApp?retryWrites=true&w=majority'
-mongodb.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true}, function(err, client) {
-  db = client.db()
-  app.listen(process.env.PORT)
-})
+// register passport authentication middleware
+app.use(auth)
 
+// add `express.json` middleware which will parse JSON requests into
+// JS objects before they reach the route files.
+// The method `.use` sets up middleware for the Express application
 app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+// this parses requests sent by `$.ajax`, which use a different content type
+app.use(express.urlencoded({ extended: true }))
 
-app.get('/', function(req, res) {
-  db.collection('items').find().toArray(function(err, items) {
-    res.send(`<!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title> Azam's Investments </title>
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    </head>
-    <body>
-      <div class="container">
-        <h1 class="display-4 text-center py-1">TRILLIONAIRES STOCKS</h1>
+// log each request as it comes in for debugging
+app.use(requestLogger)
 
-            <div class="jumbotron p-3 shadow-sm">
-          <form id="create-form" action="/create-item" method="POST">
-            <div class="d-flex align-items-center">
-              <input id="create-field" name="item" autofocus autocomplete="off" class="form-control mr-3" type="text" style="flex: 1;">
-              <button class="btn btn-primary">Add New Item</button>
-            </div>
-          </form>
-        </div>
+// register route files
+app.use(stockRoutes)
 
-        <ul id="item-list" class="list-group pb-5">
+// register error handling middleware
+// note that this comes after the route middlewares, because it needs to be
+// passed any error messages from them
+app.use(errorHandler)
 
-        </ul>
-
-      </div>
-
-      <script>
-        let items = ${JSON.stringify(items)}
-      </script>
-
-
-      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-      <script src="/browser.js"></script>
-
-    </body>
-    </html>`)
-  })
-
+// run API on designated port (4741 in this case)
+app.listen(port, () => {
+  console.log('listening on port ' + port)
 })
-
-app.post('/create-item', function(req, res) {
-    db.collection('items').insertOne({text: req.body.text}, function(err, info) {
-      res.json(info.ops[0])
-    })
-  })
-
-app.post('/update-item', function(req, res) {
-  db.collection('items').findOneAndUpdate({_id: new mongodb.ObjectId(req.body.id)}, {$set: {text: req.body.text}}, function() {
-    res.send('success')
-  })
-  })
-
-  app.post('/delete-item', function(req, res) {
-    db.collection('items').deleteOne({_id: new mongodb.ObjectId(req.body.id)}, function() {
-      res.send('success')
-    })
-    })
 
 // needed for testing
 module.exports = app

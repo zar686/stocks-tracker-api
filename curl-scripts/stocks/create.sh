@@ -1,17 +1,17 @@
 #!/bin/bash
 
-API="http://localhost:4741"
-URL_PATH="/stocks"
-
-curl "${API}${URL_PATH}" \
+curl "http://localhost:4741/stocks" \
   --include \
   --request POST \
-  --header "Content-Type: application/json" \
   --header "Authorization: Bearer ${TOKEN}" \
+  --header "Content-Type: application/json" \
   --data '{
     "example": {
       "name": "'"${NAME}"'",
-      "symbol": "'"${SYMBOL}"'"
+      "symbol": "'"${SYMBOL}"'",
+      "quantity": "'"${QTY}"'",
+      "price": "'"${PRICE}"'",
+      "reason": "'"${REASON}"'"
     }
   }'
 

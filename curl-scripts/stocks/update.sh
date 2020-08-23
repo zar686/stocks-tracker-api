@@ -11,7 +11,7 @@ curl "http://localhost:4741/stocks/${ID}" \
       "symbol": "'"${SYMBOL}"'",
       "quantity": "'"${QTY}"'",
       "price": "'"${PRICE}"'",
-      "reason": "'"${REASON}"'"
+      "rating": "'"${RATING}"'"
     }
   }'
 

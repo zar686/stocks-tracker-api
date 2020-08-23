@@ -17,7 +17,7 @@ const stockSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  reason: {
+  rating: {
     type: String,
     required: true
   },

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-curl "http://localhost:7165/stocks" \
+curl "http://localhost:4741/stocks" \
   --include \
   --request POST \
   --header "Authorization: Bearer ${TOKEN}" \

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-curl "http://localhost:4741/stocks" \
+curl "http://localhost:7165/stocks" \
   --include \
   --request GET \
   --header "Authorization: Bearer ${TOKEN}"

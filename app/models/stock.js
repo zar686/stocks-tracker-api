@@ -17,10 +17,6 @@ const stockSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  rating: {
-    type: String,
-    required: true
-  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

@@ -10,8 +10,7 @@ curl "http://localhost:4741/stocks/${ID}" \
       "name": "'"${NAME}"'",
       "symbol": "'"${SYMBOL}"'",
       "quantity": "'"${QTY}"'",
-      "price": "'"${PRICE}"'",
-      "rating": "'"${RATING}"'"
+      "price": "'"${PRICE}"'"
     }
   }'
 
